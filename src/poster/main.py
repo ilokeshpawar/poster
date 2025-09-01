@@ -39,9 +39,22 @@ def svg_to_png(
         raise
 
 
+def remove_image_metadata(image: Path) -> None:
+    """Remove metadata from an image file using exiftool."""
+    try:
+        subprocess.run(
+            ["exiftool", "-all=", "-overwrite_original", str(image)],
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Error removing metadata: {e}")
+        raise
+
+
 def new_image(size: Tuple[int, int], color: str = "white") -> Image.Image:
     """Create a new blank image with the given width, height, and background color."""
     config = load_config(Path("config/config.toml"))
+    # print(f"config: {config}")  # ANCHOR - Debugging line
 
     image = Image.new("RGB", size=size, color=color)
     logo_info = config["logo"]
@@ -77,7 +90,33 @@ def new_image(size: Tuple[int, int], color: str = "white") -> Image.Image:
             fill="black",
             font=font,
         )
-    for png in os.listdir("assets"):
+
+    pictures = config["picture"]
+    horizontal_offset = 480
+    for pic in pictures.keys():
+        try:
+            remove_image_metadata(Path(pictures[pic]))
+        except Exception as e:
+            print(f"Skipping metadata removal for {pictures[pic]}: {e}")
+        with Image.open(pictures[pic]) as pic_img:
+            pic_img = pic_img.convert("L")  # Convert to grayscale
+            aspect_ratio = pic_img.size[0] / pic_img.size[1]
+            if str(pic).startswith("lol"):
+                new_height = 330
+            else:
+                new_height = 165
+            new_width = int(new_height * aspect_ratio)
+            print(f"Resizing {pic} to {new_width}x{new_height}")
+            pic_img = pic_img.resize((new_width, new_height))
+            image.paste(
+                pic_img,
+                (horizontal_offset, 10),
+            )
+        if str(pic).startswith("lol"):
+            horizontal_offset += new_width + 10
+        else:
+            horizontal_offset += new_width + 10
+    for png in os.listdir("assets/svg"):
         if png.endswith(".png"):
-            os.unlink(os.path.join("assets", png))
+            os.unlink(os.path.join("assets/svg", png))
     return image

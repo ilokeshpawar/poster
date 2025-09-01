@@ -3,22 +3,50 @@ name = "Lokesh Pawar"
 designation = "Jr. R&D Engineer@Dozee"
 
 [logo.gmail]
-path = "assets/gmail.png"
+path = "assets/svg/gmail.png"
 username = "ilokeshpawar@gmail.com"
 horizontal_offset = 50
 vertical_offset = 238
 
 [logo.github]
-path = "assets/github.png"
+path = "assets/svg/github.png"
 username = "lokeshpawar"
 horizontal_offset = 50
 vertical_offset = 275
 
 [logo.linkedin]
-path = "assets/linkedin.png"
+path = "assets/svg/linkedin.png"
 username = "lokesh-pawar-402096a1"
 horizontal_offset = 50
 vertical_offset = 310
 
 [fonts]
 path = "assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+
+[picture]
+lol = "assets/pictures/lol.jpg"
+ollie = "assets/pictures/ollie.jpg"
+tropy = "assets/pictures/tropy.jpg"
+camping = "assets/pictures/camping.jpg"
+ollie_1 = "assets/pictures/ollie_1.jpg"
+morning = "assets/pictures/morning.jpg"
+rock_climbing = "assets/pictures/rock_climbing.jpg"
+zuzu = "assets/pictures/zuzu.jpg"
+sunset = "assets/pictures/sunset.jpg"
+waterfall = "assets/pictures/waterfall.jpeg"
+zuzu_1 = "assets/pictures/zuzu_1.jpg"
+
+
+# [picture.top]
+# ollie = "assets/pictures/ollie.jpg"
+# tropy = "assets/pictures/tropy.jpg"
+# camping = "assets/pictures/camping.jpg"
+# ollie_1 = "assets/pictures/ollie_1.jpg"
+# morning = "assets/pictures/morning.jpg"
+
+# [picture.bottom]
+# rock_climbing = "assets/pictures/rock_climbing.jpg"
+# zuzu = "assets/pictures/zuzu.jpg"
+# sunset = "assets/pictures/sunset.jpg"
+# waterfall = "assets/pictures/waterfall.jpeg"
+# zuzu_1 = "assets/pictures/zuzu_1.jpg"

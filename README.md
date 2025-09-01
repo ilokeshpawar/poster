@@ -17,3 +17,4 @@ This repository is to create profile picture and cover photo. While watching a v
 - [svg source](https://www.svgrepo.com/)
 - [fonts source](https://fonts.google.com/noto/specimen/Noto+Sans+Mono)
 - [Tom's Obvious, Minimal Language (TOML) for config](https://toml.io/en/)
+- I have used [ExifTool by Phil Harvey](https://exiftool.org/) to remove metadata from images. **If you haven't checked it out, please do. It is an amazing tool to have in your toolkit.**
