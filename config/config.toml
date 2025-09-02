@@ -23,30 +23,20 @@ vertical_offset = 310
 [fonts]
 path = "assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
 
+# The size of the LinkedIn cover image in pixels (width, height) is 1400x350
+# I personally prefer some padding around the edges, so essentially the height is 330px
+# and since text takes some of the space on left, you have width somewhere from ~400pxTO1400px-10px(padding)
+# [path, (horizontal_offset, vertical_offset), new_height]: offset is from top-left corner
+
 [picture]
-lol = "assets/pictures/lol.jpg"
-ollie = "assets/pictures/ollie.jpg"
-tropy = "assets/pictures/tropy.jpg"
-camping = "assets/pictures/camping.jpg"
-ollie_1 = "assets/pictures/ollie_1.jpg"
-morning = "assets/pictures/morning.jpg"
-rock_climbing = "assets/pictures/rock_climbing.jpg"
-zuzu = "assets/pictures/zuzu.jpg"
-sunset = "assets/pictures/sunset.jpg"
-waterfall = "assets/pictures/waterfall.jpeg"
-zuzu_1 = "assets/pictures/zuzu_1.jpg"
-
-
-# [picture.top]
-# ollie = "assets/pictures/ollie.jpg"
-# tropy = "assets/pictures/tropy.jpg"
-# camping = "assets/pictures/camping.jpg"
-# ollie_1 = "assets/pictures/ollie_1.jpg"
-# morning = "assets/pictures/morning.jpg"
-
-# [picture.bottom]
-# rock_climbing = "assets/pictures/rock_climbing.jpg"
-# zuzu = "assets/pictures/zuzu.jpg"
-# sunset = "assets/pictures/sunset.jpg"
-# waterfall = "assets/pictures/waterfall.jpeg"
-# zuzu_1 = "assets/pictures/zuzu_1.jpg"
+lol = ["assets/pictures/lol.jpg", [500, 10], 330]
+ollie = ["assets/pictures/ollie.jpg", [757, 10], 155]
+tropy = ["assets/pictures/tropy.jpg", [883, 10], 155]
+camping = ["assets/pictures/camping.jpg", [1009, 10], 155]
+ollie_1 = ["assets/pictures/ollie_1.jpg", [1135, 10], 155]
+morning = ["assets/pictures/morning.jpg", [1261, 10], 155]
+rock_climbing = ["assets/pictures/rock_climbing.jpg", [757, 185], 155]
+zuzu = ["assets/pictures/zuzu.jpg", [883, 185], 155]
+sunset = ["assets/pictures/sunset.jpg", [1009, 185], 155]
+waterfall = ["assets/pictures/waterfall.jpeg", [1135, 185], 155]
+zuzu_1 = ["assets/pictures/zuzu_1.jpg", [1261, 185], 155]
