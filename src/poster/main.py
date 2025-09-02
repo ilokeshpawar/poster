@@ -126,11 +126,15 @@ def new_image(
             new_width = int(new_height * aspect_ratio)
             print(f"Resizing {pic} to {new_width}x{new_height}")
             pic_img = pic_img.resize((new_width, new_height))
-            image.paste(pic_img, (box[0] + 10, box[1]))
-        if box[0] + new_width > (1400 - 10):  # 10px padding on right
-            raise ValueError(
-                f"{chr(0x26A0)} I have warned you before, do not commit crime in this image-nary land.{chr(0x1F4A3)}. You are trespassing the aspect ratio of 4:1. Reduce the width of images or number of images or change the horizontal offset.{chr(0x26A0)}"
-            )
+            image.paste(pic_img, box)
+            used_width = box[0] + new_width
+            if used_width > (1400 - 10):  # 10px padding on right
+                raise ValueError(
+                    f"{chr(0x26A0)} Exceeding the available width by {used_width - (1400 - 10)}.\
+                    I have warned you before, do not commit crime in this image-nary land.{chr(0x1F4A3)}{chr(0x1F4A5)}.\
+                    You are trespassing the aspect ratio of 4:1.\
+                    Reduce the width of images or number of images or change the horizontal offset.{chr(0x26A0)}"
+                )
     for png in os.listdir("assets/svg"):
         if png.endswith(".png"):
             os.unlink(os.path.join("assets/svg", png))
