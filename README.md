@@ -2,6 +2,12 @@
   - [Usage](#usage)
   - [References](#references)
 
+>[!NOTE]
+> The size of the LinkedIn cover photo is kept as ***1400 x 350 pixels***, a little different from the recommended size in [Image specifications for LinkedIn](https://www.linkedin.com/help/linkedin/answer/a563309/image-specifications-for-your-linkedin-pages-and-career-pages?lang=en) which is **1128 x 376 pixels**.
+
+>[!WARNING]
+>:bomb: Changing the aspect ratio an image is the biggest crime in an image-nary world. Avoid committing crime. :bomb:
+
 # Introduction
 This repository is to create profile picture and cover photo. While watching a video on YouTube, [Magical shell history with rust | FOSDEM 2023](https://www.youtube.com/watch?v=uyRmV19qJ2o), I found the presenter at the conference had a nice cover photo. I wanted to create something similar for myself. The presenter, [Ellie](https://github.com/ellie), is the creator of the cool shell history management tool - [atuin](https://atuin.sh/).
 
