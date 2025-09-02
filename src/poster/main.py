@@ -130,7 +130,7 @@ def new_image(
             used_width = box[0] + new_width
             if used_width > (1400 - 10):  # 10px padding on right
                 raise ValueError(
-                    f"{chr(0x26A0)} Exceeding the available width by {used_width - (1400 - 10)}.\
+                    f"{chr(0x26A0)} Exceeding the available width by {used_width - (1400 - 10)}px.\
                     I have warned you before, do not commit crime in this image-nary land.{chr(0x1F4A3)}{chr(0x1F4A5)}.\
                     You are trespassing the aspect ratio of 4:1.\
                     Reduce the width of images or number of images or change the horizontal offset.{chr(0x26A0)}"
