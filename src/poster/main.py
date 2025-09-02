@@ -4,10 +4,17 @@ from pathlib import Path
 from tomllib import load as toml_load
 from typing import Tuple
 
+# from collections.abc import Sequence
 from PIL import Image, ImageDraw, ImageFont
 from rich import print
 
 from poster.constants import LOGO_SIZE
+
+
+def know_the_size(image_path: Path) -> None:
+    """Return the dimensions (width, height) of the image at the given path."""
+    # TODO - Implement this function
+    pass
 
 
 def load_config(config_path: Path) -> dict:
@@ -33,6 +40,8 @@ def svg_to_png(
                 f"--export-background={background_color}",
             ],
             check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
     except subprocess.CalledProcessError as e:
         print(f"Error converting SVG to PNG: {e}")
@@ -43,15 +52,24 @@ def remove_image_metadata(image: Path) -> None:
     """Remove metadata from an image file using exiftool."""
     try:
         subprocess.run(
-            ["exiftool", "-all=", "-overwrite_original", str(image)],
+            [
+                "exiftool",
+                "-all=",
+                "-overwrite_original",
+                str(image),
+            ],
             check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
     except subprocess.CalledProcessError as e:
         print(f"Error removing metadata: {e}")
         raise
 
 
-def new_image(size: Tuple[int, int], color: str = "white") -> Image.Image:
+def new_image(
+    size: Tuple[int, int], color: str = "white", greyscale: bool = False
+) -> Image.Image:
     """Create a new blank image with the given width, height, and background color."""
     config = load_config(Path("config/config.toml"))
     # print(f"config: {config}")  # ANCHOR - Debugging line
@@ -92,30 +110,27 @@ def new_image(size: Tuple[int, int], color: str = "white") -> Image.Image:
         )
 
     pictures = config["picture"]
-    horizontal_offset = 480
     for pic in pictures.keys():
+        pic_info = pictures[pic]
+        path = pic_info[0]
+        box: tuple = tuple(pic_info[1])
+        new_height = pic_info[2]
         try:
-            remove_image_metadata(Path(pictures[pic]))
+            remove_image_metadata(Path(path))
         except Exception as e:
-            print(f"Skipping metadata removal for {pictures[pic]}: {e}")
-        with Image.open(pictures[pic]) as pic_img:
-            pic_img = pic_img.convert("L")  # Convert to grayscale
+            print(f"Skipping metadata removal for {path}: {e}")
+        with Image.open(path) as pic_img:
+            if greyscale:
+                pic_img = pic_img.convert("L")  # Convert to grayscale
             aspect_ratio = pic_img.size[0] / pic_img.size[1]
-            if str(pic).startswith("lol"):
-                new_height = 330
-            else:
-                new_height = 165
             new_width = int(new_height * aspect_ratio)
             print(f"Resizing {pic} to {new_width}x{new_height}")
             pic_img = pic_img.resize((new_width, new_height))
-            image.paste(
-                pic_img,
-                (horizontal_offset, 10),
+            image.paste(pic_img, (box[0] + 10, box[1]))
+        if box[0] + new_width > (1400 - 10):  # 10px padding on right
+            raise ValueError(
+                f"{chr(0x26A0)} I have warned you before, do not commit crime in this image-nary land.{chr(0x1F4A3)}. You are trespassing the aspect ratio of 4:1. Reduce the width of images or number of images or change the horizontal offset.{chr(0x26A0)}"
             )
-        if str(pic).startswith("lol"):
-            horizontal_offset += new_width + 10
-        else:
-            horizontal_offset += new_width + 10
     for png in os.listdir("assets/svg"):
         if png.endswith(".png"):
             os.unlink(os.path.join("assets/svg", png))
