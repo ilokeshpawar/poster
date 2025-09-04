@@ -1,6 +1,7 @@
 prompt = "> whoami"
 name = "Lokesh Pawar"
 designation = "Jr. R&D Engineer@Dozee"
+background_color = [255, 255, 255]     #RGB
 
 [logo.gmail]
 path = "assets/svg/gmail.png"
@@ -22,11 +23,14 @@ vertical_offset = 310
 
 [fonts]
 path = "assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+color = "black"
 
 # The size of the LinkedIn cover image in pixels (width, height) is 1400x350
 # I personally prefer some padding around the edges, so essentially the height is 330px
 # and since text takes some of the space on left, you have width somewhere from ~400pxTO1400px-10px(padding)
 # [path, (horizontal_offset, vertical_offset), new_height]: offset is from top-left corner
+# Run `poster size` command to know the size of your images
+# and update the config.toml file accordingly
 
 [picture]
 lol = ["assets/pictures/lol.jpg", [512, 10], 330]
