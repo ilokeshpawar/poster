@@ -1,18 +1,39 @@
 - [Introduction](#introduction)
+  - [Notes](#notes)
   - [Usage](#usage)
   - [References](#references)
+  - [TODO](#todo)
+  - [Contact](#contact)
 
 >[!NOTE]
-> The size of the LinkedIn cover photo is kept as ***1400 x 350 pixels***, a little different from the recommended size in [Image specifications for LinkedIn](https://www.linkedin.com/help/linkedin/answer/a563309/image-specifications-for-your-linkedin-pages-and-career-pages?lang=en) which is **1128 x 376 pixels**.
+> The LinkedIn cover photo size is set to **`1400 x 350 pixels`**, which differs slightly from the recommended size in [Image specifications for LinkedIn](https://www.linkedin.com/help/linkedin/answer/a563309/image-specifications-for-your-linkedin-pages-and-career-pages?lang=en): ***1128 x 376 pixels***.
 
 >[!WARNING]
->:bomb: Changing the aspect ratio an image is the biggest crime in an image-nary world. Avoid committing crime. :bomb:
+>:bomb: Altering an image's aspect ratio is a cardinal sin in an `image-nary world`. Please avoid this at all costs. :bomb:
 
 # Introduction
-This repository is to create profile picture and cover photo. While watching a video on YouTube, [Magical shell history with rust | FOSDEM 2023](https://www.youtube.com/watch?v=uyRmV19qJ2o), I found the presenter at the conference had a nice cover photo. I wanted to create something similar for myself. The presenter, [Ellie](https://github.com/ellie), is the creator of the cool shell history management tool - [atuin](https://atuin.sh/).
+This repository helps you create a profile picture and cover photo. Inspired by the cover photo shown in [Magical shell history with rust | FOSDEM 2023](https://www.youtube.com/watch?v=uyRmV19qJ2o), I decided to design something similar for myself. The presenter, [Ellie](https://github.com/ellie), is the creator of the shell history management tool [atuin](https://atuin.sh/).
+
+## Notes
+- All configuration is managed in the [config/config.toml](./config/config.toml) file. Please update it according to your requirements.
+- My workflow is Linux-based; I have not tested this on Windows or macOS. If you encounter any issues, feel free to open an issue. It should work fine on Unix-based systems.
+- *Please take utmost care regarding privacy. I have only shared information here that is already publicly available. I have avoided sharing unnecessary personal details.*
 
 ## Usage
-#TODO - Add usage instructions
+1. Clone the repository:
+   ```bash
+   git clone git@github.com:ilokeshpawar/poster.git
+   cd poster
+   ```
+2. This project uses [uv](https://docs.astral.sh/uv/) for environment management. Install it from [here](https://docs.astral.sh/uv/getting-started/installation/).
+3. Inside the project directory, install dependencies:
+   ```bash
+   uv sync
+   ```
+4. To create the cover photo, run:
+   ```bash
+   uv run poster --help
+   ```
 
 ## References
 - [YouTube Video](https://www.youtube.com/watch?v=uyRmV19qJ2o)
@@ -20,7 +41,15 @@ This repository is to create profile picture and cover photo. While watching a v
 - [atuin](https://atuin.sh/)
 - [Personalizing your GitHub profile](https://docs.github.com/en/account-and-profile/get-started/personalizing-your-profile)
 - [Image specifications for LinkedIn](https://www.linkedin.com/help/linkedin/answer/a563309/image-specifications-for-your-linkedin-pages-and-career-pages?lang=en)
-- [svg source](https://www.svgrepo.com/)
-- [fonts source](https://fonts.google.com/noto/specimen/Noto+Sans+Mono)
+- [SVG source](https://www.svgrepo.com/)
+- [Fonts source](https://fonts.google.com/noto/specimen/Noto+Sans+Mono)
 - [Tom's Obvious, Minimal Language (TOML) for config](https://toml.io/en/)
-- I have used [ExifTool by Phil Harvey](https://exiftool.org/) to remove metadata from images. **If you haven't checked it out, please do. It is an amazing tool to have in your toolkit.**
+- [ExifTool by Phil Harvey](https://exiftool.org/) was used to remove image metadata. **If you haven't tried it, I highly recommend adding it to your toolkit.**
+
+## TODO
+- Output cover path
+- License field in pyproject.toml
+
+## Contact
+If you have any questions, feel free to reach out via [Gmail](mailto:ilokeshpawar@gmail.com). I'm happy to help.
+
