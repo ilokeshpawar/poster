@@ -1,11 +1,9 @@
 import typer
 from typing_extensions import Annotated
 
-from poster.constants import (
-    LINKEDIN_COVER_FILE_PATH,
-    LINKEDIN_COVER_SIZE,
-)
-from poster.main import know_the_size, new_image
+from poster._config import config
+from poster._constants import LINKEDIN_COVER_SIZE
+from poster.main import cover_picture, size_matters
 
 app = typer.Typer(no_args_is_help=True, rich_markup_mode="rich")
 
@@ -26,15 +24,21 @@ def cover(
     ] = False,
 ):
     """Create a LinkedIn cover image with the specified information."""
-    image = new_image(
+    image = cover_picture(
         size=LINKEDIN_COVER_SIZE,
         greyscale=greyscale,
     )
     if preview:
         image.show()
     else:
-        image.save(LINKEDIN_COVER_FILE_PATH)
+        cover_path = config["cover_output_path"]
+        image.save(cover_path)
         print("LinkedIn cover image created")
+
+
+# @app.command()
+# def profile():
+#     pass
 
 
 @app.command(
@@ -43,7 +47,7 @@ def cover(
 )
 def size():
     """Know the size of an image or all images in a directory."""
-    return know_the_size()
+    return size_matters()
 
 
 @app.callback()

@@ -1,32 +1,26 @@
 import os
-import subprocess
 from pathlib import Path
-from tomllib import load as toml_load
-from typing import NewType, Tuple
+from typing import Tuple
 
 from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 from rich import print
 
-from poster.constants import LOGO_SIZE
+from poster._config import config
+from poster._constants import LOGO_SIZE
+from poster._helper import remove_image_metadata, rgb_to_hex, svg_to_png
 
-RgbHex = NewType("RgbHex", str)
-
-
-def rgb_to_hex(rgb: tuple[int, int, int]) -> RgbHex:
-    return RgbHex(f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}")
-
-
-def load_config(config_path: Path) -> dict:
-    """Load configuration from a TOML file."""
-    with config_path.open("rb") as f:
-        config = toml_load(f)
-    return config
+images: dict[str, list] = config["picture"]
+logo_s: dict = config["logo"]
+fonts: dict = config["fonts"]
 
 
-def know_the_size() -> None:
+def profile():
+    # TODO - Implement this later
+    pass
+
+
+def size_matters() -> None:
     """Return the dimensions (width, height) of the image at the given path."""
-    config = load_config(Path("config/config.toml"))
-    images = config["picture"]
     for image in images.keys():
         image_path = images[image][0]
         try:
@@ -37,59 +31,13 @@ def know_the_size() -> None:
             print(f"Skipping non-image file: {image_path}")
 
 
-def svg_to_png(
-    svg: Path, png: Path, size: Tuple[int, int], background_color: RgbHex
-) -> None:
-    """Convert an SVG file to a PNG file with the specified size."""
-    try:
-        subprocess.run(
-            [
-                "inkscape",
-                svg,
-                "--export-type=png",
-                f"--export-filename={png}",
-                f"--export-width={size[0]}",
-                f"--export-height={size[1]}",
-                f"--export-background={background_color}",
-            ],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except subprocess.CalledProcessError as e:
-        print(f"Error converting SVG to PNG: {e}")
-        raise
-
-
-def remove_image_metadata(image: Path) -> None:
-    """Remove metadata from an image file using exiftool."""
-    try:
-        subprocess.run(
-            [
-                "exiftool",
-                "-all=",
-                "-overwrite_original",
-                str(image),
-            ],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-    except subprocess.CalledProcessError as e:
-        print(f"Error removing metadata: {e}")
-        raise
-
-
-def new_image(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
+def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
     """Create a new blank image with the given width, height, and background color."""
-    config = load_config(Path("config/config.toml"))
     bg_color: tuple[int, int, int] = tuple(config["background_color"])
 
     image = Image.new("RGB", size=size, color=bg_color)
-    logo_s: dict = config["logo"]
 
     draw = ImageDraw.Draw(image)
-    fonts = config["fonts"]
     font = ImageFont.truetype(fonts["path"], size=20)
     header_fields = [("prompt", 10), ("name", 40), ("designation", 70)]
 
@@ -97,12 +45,15 @@ def new_image(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
         draw.text((50, y), config.get(field, ""), fill=fonts["color"], font=font)
     for logo in logo_s.keys():
         username = logo_s[logo]["username"]
-        svg_to_png(
-            svg=Path(f"{logo_s[logo]['path']}".split(".")[0] + ".svg"),
-            png=Path(logo_s[logo]["path"]),
-            size=LOGO_SIZE,
-            background_color=rgb_to_hex(bg_color),
-        )
+        try:
+            svg_to_png(
+                svg=Path(f"{logo_s[logo]['path']}".split(".")[0] + ".svg"),
+                png=Path(logo_s[logo]["path"]),
+                size=LOGO_SIZE,
+                background_color=rgb_to_hex(bg_color),
+            )
+        except Exception:
+            continue
         with Image.open(f"{logo_s[logo]['path']}") as _logo:
             image.paste(
                 _logo,
@@ -121,7 +72,6 @@ def new_image(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
             font=font,
         )
 
-    images: dict[str, list] = config["picture"]
     for _image in images.keys():
         image_info = images[_image]
         path = image_info[0]
