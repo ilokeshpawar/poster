@@ -33,9 +33,11 @@ def size_matters() -> None:
 
 def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
     """Create a new blank image with the given width, height, and background color."""
-    bg_color: tuple[int, int, int] = tuple(config["background_color"])
+    bg_color = config["background_color"]
+    bg_cover: tuple[int, int, int] = tuple(bg_color["cover"])
+    bg_logo: tuple[int, int, int] = tuple(bg_color["logo"])
 
-    image = Image.new("RGB", size=size, color=bg_color)
+    image = Image.new("RGB", size=size, color=bg_cover)
 
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype(fonts["path"], size=20)
@@ -46,11 +48,12 @@ def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image
     for logo in logo_s.keys():
         username = logo_s[logo]["username"]
         try:
+            # logo_background_color = config["logo_background_color"]
             svg_to_png(
                 svg=Path(f"{logo_s[logo]['path']}".split(".")[0] + ".svg"),
                 png=Path(logo_s[logo]["path"]),
                 size=LOGO_SIZE,
-                background_color=rgb_to_hex(bg_color),
+                background_color=rgb_to_hex(bg_logo),
             )
         except Exception:
             continue

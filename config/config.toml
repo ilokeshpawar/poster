@@ -1,8 +1,11 @@
 prompt = "> whoami"
 name = "Lokesh Pawar"
 designation = "Jr. R&D Engineer@Dozee"
-background_color = [255, 255, 255]                #RGB
-cover_output_path = "output/example_linkedin.png"
+cover_output_path = "output/white_bg_example.png"
+
+[background_color]
+cover = [255, 255, 255] #RGB
+logo = [255, 255, 255]  #RGB
 
 [logo.gmail]
 path = "assets/svg/gmail.png"
