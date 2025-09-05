@@ -2,7 +2,6 @@
   - [Notes](#notes)
   - [Usage](#usage)
   - [References](#references)
-  - [TODO](#todo)
   - [Contact](#contact)
 
 >[!NOTE]
@@ -16,6 +15,8 @@ This repository helps you create a profile picture and cover photo. Inspired by 
 
 ## Notes
 - All configuration is managed in the [config/config.toml](./config/config.toml) file. Please update it according to your requirements.
+- For SVG to PNG logo conversion, I used [Inkscape](https://inkscape.org/). If you don't have it installed, simply specify the logo image paths in [config.toml](./config/config.toml).
+- Installing [ExifTool by Phil Harvey](https://exiftool.org/) is optional. You can remove EXIF metadata if you wish, but after cover creation, EXIF data is discarded. Unless you are publishing actual images in a public repository, this is generally not a concern.
 - My workflow is Linux-based; I have not tested this on Windows or macOS. If you encounter any issues, feel free to open an issue. It should work fine on Unix-based systems.
 - *Please take utmost care regarding privacy. I have only shared information here that is already publicly available. I have avoided sharing unnecessary personal details.*
 
@@ -45,10 +46,6 @@ This repository helps you create a profile picture and cover photo. Inspired by 
 - [Fonts source](https://fonts.google.com/noto/specimen/Noto+Sans+Mono)
 - [Tom's Obvious, Minimal Language (TOML) for config](https://toml.io/en/)
 - [ExifTool by Phil Harvey](https://exiftool.org/) was used to remove image metadata. **If you haven't tried it, I highly recommend adding it to your toolkit.**
-
-## TODO
-- Output cover path
-- License field in pyproject.toml
 
 ## Contact
 If you have any questions, feel free to reach out via [Gmail](mailto:ilokeshpawar@gmail.com). I'm happy to help.
