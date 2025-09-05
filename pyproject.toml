@@ -4,7 +4,7 @@ version = "0.1.0"
 license = "MIT"
 description = "Creates cover for social media platform such as LinkedIn and VCS e.g. github."
 readme = "README.md"
-authors = [{ email = "ilokeshpawar@gmail.com" }]
+authors = [{ name = "Lokesh Pawar", email = "ilokeshpawar@gmail.com" }]
 requires-python = ">=3.13"
 dependencies = ["beartype>=0.21.0", "pillow>=11.3.0", "typer>=0.17.3"]
 
