@@ -1,33 +1,38 @@
+# The following three properties are required and cannot be customized.
+# The keys and their placement are fixed; only the values can be changed.
 prompt = "> whoami"
-name = "Lokesh Pawar"
-designation = "Jr. R&D Engineer@Dozee"
-cover_output_path = "output/white_bg_example.png"
+name = "John Doe"
+designation = "Software Developer@ExampleCorp"
+cover_output_path = "assets/output/white_bg_example.png"
 
 [background_color]
 cover = [255, 255, 255] #RGB
 logo = [255, 255, 255]  #RGB
 
+# You can add any number of logos, but make sure to specify their properties.
 [logo.gmail]
 path = "assets/svg/gmail.png"
-username = "ilokeshpawar@gmail.com"
+username = "dummy.email@example.com"
 horizontal_offset = 50
 vertical_offset = 238
 
 [logo.github]
 path = "assets/svg/github.png"
-username = "lokeshpawar"
+username = "dummyuser"
 horizontal_offset = 50
 vertical_offset = 275
 
 [logo.linkedin]
 path = "assets/svg/linkedin.png"
-username = "lokesh-pawar-402096a1"
+username = "dummy-linkedin-id"
 horizontal_offset = 50
 vertical_offset = 310
 
+# If you want to use default fonts `set path = ""`
 [fonts]
 path = "assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
 color = "black"
+size = 20
 
 # The size of the LinkedIn cover image in pixels (width, height) is 1400x350
 # I personally prefer some padding around the edges, so essentially the height is 330px
@@ -35,7 +40,6 @@ color = "black"
 # [path, (horizontal_offset, vertical_offset), new_height]: offset is from top-left corner
 # Run `poster size` command to know the size of your images
 # and update the config.toml file accordingly
-
 [picture]
 lol = ["assets/pictures/lol.jpg", [512, 10], 330]
 ollie = ["assets/pictures/ollie.jpg", [769, 10], 155]
