@@ -1,8 +1,16 @@
 import subprocess
 from pathlib import Path
+from tomllib import load as toml_load
 from typing import NewType, Tuple
 
 RgbHex = NewType("RgbHex", str)
+
+
+def load_config(config_path: Path) -> dict:
+    """Load configuration from a TOML file."""
+    with config_path.open("rb") as f:
+        config = toml_load(f)
+    return config
 
 
 def rgb_to_hex(rgb: tuple[int, int, int]) -> RgbHex:
@@ -30,9 +38,10 @@ def svg_to_png(
         )
     except subprocess.CalledProcessError as e:
         print(
-            f"Error converting SVG to PNG: {e}. Make sure you have inkscape installed\
-                and in your path or use `--skip-conversion` flag and\
-                      make sure to put {'logo'}.png with in `asset/svg/ directory.`"
+            f"Error converting SVG to PNG: {e}.\
+            Ensure Inkscape is installed and available in your PATH,\
+            or use the `--no-conversion` flag. Alternatively,\
+            provide the path for logos to load from."
         )
         raise
 
@@ -52,5 +61,9 @@ def remove_image_metadata(image: Path) -> None:
             stderr=subprocess.DEVNULL,
         )
     except subprocess.CalledProcessError as e:
-        print(f"Error removing metadata: {e}")
+        print(
+            f"Failed to remove metadata: {e}.\
+            Please ensure exiftool is installed and available in your PATH,\
+            or use the `--no-exif-removal` flag."
+        )
         raise

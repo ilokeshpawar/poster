@@ -1,17 +1,11 @@
-import os
 from pathlib import Path
 from typing import Tuple
 
 from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 from rich import print
 
-from poster._config import config
 from poster._constants import LOGO_SIZE
-from poster._helper import remove_image_metadata, rgb_to_hex, svg_to_png
-
-images: dict[str, list] = config["picture"]
-logo_s: dict = config["logo"]
-fonts: dict = config["fonts"]
+from poster._helper import load_config, remove_image_metadata, rgb_to_hex, svg_to_png
 
 
 def profile():
@@ -19,8 +13,10 @@ def profile():
     pass
 
 
-def size_matters() -> None:
+def size_matters(config_path: Path) -> None:
     """Return the dimensions (width, height) of the image at the given path."""
+    config = load_config(config_path)
+    images: dict[str, list] = config["picture"]
     for image in images.keys():
         image_path = images[image][0]
         try:
@@ -31,7 +27,17 @@ def size_matters() -> None:
             print(f"Skipping non-image file: {image_path}")
 
 
-def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image:
+def cover_picture(
+    config_path: Path,
+    size: Tuple[int, int],
+    greyscale: bool = False,
+    exif_removal: bool = True,
+    svg_to_png_conversion: bool = True,
+) -> Image.Image:
+    config = load_config(config_path)
+    images: dict[str, list] = config["picture"]
+    logo_s: dict = config["logo"]
+    fonts: dict = config["fonts"]
     """Create a new blank image with the given width, height, and background color."""
     bg_color = config["background_color"]
     bg_cover: tuple[int, int, int] = tuple(bg_color["cover"])
@@ -40,23 +46,23 @@ def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image
     image = Image.new("RGB", size=size, color=bg_cover)
 
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype(fonts["path"], size=20)
+    if fonts["path"] != "":
+        font = ImageFont.truetype(fonts["path"], size=fonts["size"])
+    else:
+        font = ImageFont.load_default(size=fonts["size"])
     header_fields = [("prompt", 10), ("name", 40), ("designation", 70)]
 
     for field, y in header_fields:
         draw.text((50, y), config.get(field, ""), fill=fonts["color"], font=font)
     for logo in logo_s.keys():
-        username = logo_s[logo]["username"]
-        try:
-            # logo_background_color = config["logo_background_color"]
+        username: str = logo_s[logo]["username"]
+        if svg_to_png_conversion:
             svg_to_png(
                 svg=Path(f"{logo_s[logo]['path']}".split(".")[0] + ".svg"),
                 png=Path(logo_s[logo]["path"]),
                 size=LOGO_SIZE,
                 background_color=rgb_to_hex(bg_logo),
             )
-        except Exception:
-            continue
         with Image.open(f"{logo_s[logo]['path']}") as _logo:
             image.paste(
                 _logo,
@@ -80,10 +86,8 @@ def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image
         path = image_info[0]
         box: tuple = tuple(image_info[1])
         new_height = image_info[2]
-        try:
+        if exif_removal:
             remove_image_metadata(Path(path))
-        except Exception as e:
-            print(f"Skipping metadata removal for {path}: {e}")
         with Image.open(path) as picture:
             if greyscale:
                 picture = picture.convert("L")  # Convert to grayscale
@@ -100,7 +104,4 @@ def cover_picture(size: Tuple[int, int], greyscale: bool = False) -> Image.Image
                     You are trespassing the aspect ratio of 4:1.\
                     Reduce the width of images or number of images or change the horizontal offset.{chr(0x26A0)}"
                 )
-    for png in os.listdir("assets/svg"):
-        if png.endswith(".png"):
-            os.unlink(os.path.join("assets/svg", png))
     return image
