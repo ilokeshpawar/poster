@@ -1,0 +1,54 @@
+# The following three properties are required and cannot be customized.
+# The keys and their placement are fixed; only the values can be changed.
+prompt = "> whoami"
+name = "John Doe"
+designation = "Software Developer@ExampleCorp"
+cover_output_path = "assets/output/white_bg_example.png"
+
+[background_color]
+cover = [255, 255, 255] #RGB
+logo = [255, 255, 255]  #RGB
+
+# You can add any number of logos, but make sure to specify their properties.
+[logo.gmail]
+path = "assets/svg/gmail.png"
+username = "dummy.email@example.com"
+horizontal_offset = 50
+vertical_offset = 238
+
+[logo.github]
+path = "assets/svg/github.png"
+username = "dummyuser"
+horizontal_offset = 50
+vertical_offset = 275
+
+[logo.linkedin]
+path = "assets/svg/linkedin.png"
+username = "dummy-linkedin-id"
+horizontal_offset = 50
+vertical_offset = 310
+
+# If you want to use default fonts `set path = ""`
+[fonts]
+path = "assets/fonts/NotoSansMono-VariableFont_wdth,wght.ttf"
+color = "black"
+size = 20
+
+# The size of the LinkedIn cover image in pixels (width, height) is 1400x350
+# I personally prefer some padding around the edges, so essentially the height is 330px
+# and since text takes some of the space on left, you have width somewhere from ~400pxTO1400px-10px(padding)
+# [path, (horizontal_offset, vertical_offset), new_height]: offset is from top-left corner
+# Run `poster size` command to know the size of your images
+# and update the config.toml file accordingly
+[picture]
+lol = ["assets/pictures/lol.jpg", [512, 10], 330]
+ollie = ["assets/pictures/ollie.jpg", [769, 10], 155]
+tropy = ["assets/pictures/tropy.jpg", [895, 10], 155]
+camping = ["assets/pictures/camping.jpg", [1021, 10], 155]
+ollie_1 = ["assets/pictures/ollie_1.jpg", [1147, 10], 155]
+morning = ["assets/pictures/morning.jpg", [1273, 10], 155]
+rock_climbing = ["assets/pictures/rock_climbing.jpg", [769, 185], 155]
+zuzu = ["assets/pictures/zuzu.jpg", [895, 185], 155]
+sunset = ["assets/pictures/sunset.jpg", [1021, 185], 155]
+waterfall = ["assets/pictures/waterfall.jpeg", [1147, 185], 155]
+zuzu_1 = ["assets/pictures/zuzu_1.jpg", [1273, 185], 155]

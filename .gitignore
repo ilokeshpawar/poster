@@ -4,3 +4,9 @@ __pycache__/
 # uv specific
 uv.lock
 .python-version
+
+# notebook
+test.ipynb
+
+# distribution
+dist/
